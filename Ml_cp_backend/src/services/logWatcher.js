@@ -79,7 +79,7 @@ class LogWatcher {
             const saved = await ParsedLog.create(docToSave);
             console.log(
               "✅ Parsed log saved to parsedlogs (test DB) with id:",
-              saved._id
+              saved._id,
             );
 
             // --- send to prediction API ---
@@ -101,9 +101,13 @@ class LogWatcher {
                 },
               };
 
-              // TODO: Replace with your actual ngrok URL from `ngrok http 5000`
-              const ngrokUrl =
-                process.env.NGROK_URL || "http://localhost:5000/predict";
+              // Use ngrok URL from environment variable
+              const ngrokUrl = process.env.NGROK_URL;
+              if (!ngrokUrl) {
+                throw new Error(
+                  "NGROK_URL not set in .env file. Add: NGROK_URL=https://your-ngrok-url.ngrok-free.dev/predict",
+                );
+              }
 
               const resp = await axios.post(ngrokUrl, payload, {
                 headers: { "Content-Type": "application/json" },
@@ -115,7 +119,7 @@ class LogWatcher {
                 "🔮 Prediction API response - reconstruction_error:",
                 body.reconstruction_error,
                 ", is_anomaly:",
-                body.is_anomaly
+                body.is_anomaly,
               );
 
               // Save anomaly if flagged
@@ -153,15 +157,22 @@ class LogWatcher {
 
                     console.log("Sending to Slack...");
 
+                    const slackUrl = process.env.SLACK_WEBHOOK_URL;
+                    if (!slackUrl) {
+                      throw new Error(
+                        "SLACK_WEBHOOK_URL not set in .env file"
+                      );
+                    }
+
                     const slackResponse = await axios.post(
-                      "https://hooks.slack.com/services/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",
-                      slackMessage
+                      slackUrl,
+                      slackMessage,
                     );
 
                     console.log(
                       "Slack response:",
                       slackResponse.status,
-                      slackResponse.data
+                      slackResponse.data,
                     );
                   } catch (err) {
                     console.error("❌ Slack webhook failed:", err.message);
@@ -177,7 +188,7 @@ class LogWatcher {
             } catch (apiErr) {
               console.error(
                 "❌ Error sending parsed log to prediction API:",
-                apiErr.message || apiErr
+                apiErr.message || apiErr,
               );
             }
             // --- end send ---
@@ -216,7 +227,7 @@ class LogWatcher {
     const metadata = log.metadata || {};
 
     const timestamp = new Date(
-      metadata.timestamp || log.timestamp || new Date()
+      metadata.timestamp || log.timestamp || new Date(),
     );
     const hour = timestamp.getHours();
     const dayOfWeek = timestamp.getDay(); // 0 (Sunday) → 6 (Saturday)
