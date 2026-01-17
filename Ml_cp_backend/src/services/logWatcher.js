@@ -159,9 +159,7 @@ class LogWatcher {
 
                     const slackUrl = process.env.SLACK_WEBHOOK_URL;
                     if (!slackUrl) {
-                      throw new Error(
-                        "SLACK_WEBHOOK_URL not set in .env file"
-                      );
+                      throw new Error("SLACK_WEBHOOK_URL not set in .env file");
                     }
 
                     const slackResponse = await axios.post(
