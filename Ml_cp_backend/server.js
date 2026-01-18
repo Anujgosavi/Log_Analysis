@@ -5,21 +5,31 @@ const logRoutes = require("./src/routes/logRoutes");
 const anomalyRoutes = require("./src/routes/anomalyRoutes"); // add this
 const parsedLogRoutes = require("./src/routes/parsedLogRoutes");
 const logWatcher = require("./src/services/logWatcher");
+const mlService = require("./src/services/mlService"); // add this
 
 const logger = require("./src/middleware/logger");
 
 const app = express();
 
-// Connect to MongoDB
+// Connect to MongoDB and start ML Service
 connectDB().then(async () => {
   try {
+    // Start ML Service (Python FastAPI)
+    try {
+      await mlService.start();
+      console.log("✅ ML Service initialized");
+    } catch (mlErr) {
+      console.error("❌ Failed to initialize ML Service:", mlErr.message);
+      console.warn("⚠️ Continuing without ML Service...");
+    }
+
     await logWatcher.watch();
     console.log(
       "LogWatcher status:",
-      logWatcher.isConnected() ? "Connected" : "Not Connected"
+      logWatcher.isConnected() ? "Connected" : "Not Connected",
     );
   } catch (error) {
-    console.error("Failed to initialize LogWatcher:", error);
+    console.error("Failed to initialize services:", error);
   }
 });
 
@@ -51,6 +61,21 @@ const server = app.listen(PORT, () => {
 });
 
 process.on("SIGTERM", () => {
+  console.log("🛑 Shutting down gracefully...");
   logWatcher.close();
-  server.close();
+  mlService.stop(); // Stop ML Service
+  server.close(() => {
+    console.log("✅ Server closed");
+    process.exit(0);
+  });
+});
+
+process.on("SIGINT", () => {
+  console.log("🛑 Shutting down gracefully...");
+  logWatcher.close();
+  mlService.stop(); // Stop ML Service
+  server.close(() => {
+    console.log("✅ Server closed");
+    process.exit(0);
+  });
 });
