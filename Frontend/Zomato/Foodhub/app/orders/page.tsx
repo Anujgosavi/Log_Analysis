@@ -35,7 +35,7 @@ export default function OrdersPage() {
           <div className="text-center py-16">
             <div className="text-6xl mb-4">📦</div>
             <h2 className="text-2xl font-semibold text-foreground mb-2">No orders yet</h2>
-            <p className="text-muted-foreground">Start ordering your favorite food today!</p>
+            <p className="text-muted-foreground">Your orders will appear here once you start shopping.</p>
           </div>
         </div>
       </main>

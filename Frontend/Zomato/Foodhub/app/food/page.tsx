@@ -8,16 +8,15 @@ import { useApiAnomaly } from "@/app/providers/apiAnomalyContext"
 
 const CATEGORIES = [
     "All",
-    "Pizza",
-    "Burgers",
-    "Salads",
-    "Indian",
-    "Asian",
-    "Mexican",
-    "Desserts",
-    "Beverages",
-    "Wraps",
-    "Pasta",
+    "Electronics",
+    "Clothing",
+    "Books",
+    "Home",
+    "Sports",
+    "Beauty",
+    "Toys",
+    "Footwear",
+    "Accessories",
 ]
 
 export default function FoodPage() {
@@ -69,10 +68,10 @@ export default function FoodPage() {
             <main className="flex items-center justify-center min-h-screen bg-background">
                 <div className="text-center">
                     <h2 className="text-2xl font-semibold text-foreground mb-2">
-                        {apiAnomaly ? "Hold Tight, your meals are arriving..." : "Loading..."}
+                        {apiAnomaly ? "Hold Tight, products are on their way..." : "Loading..."}
                     </h2>
                     <p className="text-muted-foreground">
-                        Please wait while we load your delicious meals 🍔
+                        Please wait while we load our latest products 🛍️
                     </p>
                 </div>
             </main>
@@ -85,10 +84,10 @@ export default function FoodPage() {
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold text-foreground mb-2">
-                        Order Your Favorite Food
+                        Browse Our Products
                     </h1>
                     <p className="text-muted-foreground">
-                        Fast delivery, fresh food, great prices
+                        Fast delivery, great prices, thousands of products
                     </p>
                 </div>
 
@@ -108,7 +107,7 @@ export default function FoodPage() {
                     </div>
                 </div>
 
-                {/* Food Items Grid */}
+                {/* Products Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     {filteredItems.map((item) => (
                         <FoodCard key={item.id} item={item} anomalyMode={anomalyMode} />

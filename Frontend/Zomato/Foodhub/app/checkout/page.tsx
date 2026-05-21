@@ -63,7 +63,7 @@ export default function CheckoutPage() {
       <main className="flex items-center justify-center min-h-screen bg-background">
         <div className="text-center">
           <h2 className="text-2xl font-semibold text-foreground mb-2">
-            {apiAnomaly ? "Getting your cart, Hold Tight" : "Loading..."}
+            {apiAnomaly ? "Fetching your cart, Hold Tight..." : "Loading..."}
           </h2>
           <p className="text-muted-foreground">
             Please wait while we fetch your cart 🛒
@@ -80,14 +80,14 @@ export default function CheckoutPage() {
           <div className="flex items-center gap-2 mb-8">
             <Link href="/" className="flex items-center gap-2 text-primary hover:underline">
               <ArrowLeft size={20} />
-              Back to Menu
+              Back to Shop
             </Link>
           </div>
 
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🛒</div>
             <h1 className="text-3xl font-bold text-foreground mb-2">Your cart is empty</h1>
-            <p className="text-muted-foreground mb-8">Add some delicious food to get started!</p>
+            <p className="text-muted-foreground mb-8">Add some products to get started!</p>
             <Link href="/">
               <Button size="lg">Continue Shopping</Button>
             </Link>
@@ -104,7 +104,7 @@ export default function CheckoutPage() {
         <div className="flex items-center gap-2 mb-8">
           <Link href="/" className="flex items-center gap-2 text-primary hover:underline">
             <ArrowLeft size={20} />
-            Back to Menu
+            Back to Shop
           </Link>
         </div>
 

@@ -28,7 +28,7 @@ export default function SearchPage() {
   const demonstrateUnsafeSearch = (query: string) => {
     // This is a DEMONSTRATION of what NOT to do
     // In a real application, NEVER concatenate user input into SQL queries
-    const unsafeQuery = `SELECT * FROM food_items WHERE name LIKE '%${query}%'`
+    const unsafeQuery = `SELECT * FROM products WHERE name LIKE '%${query}%'`
     return unsafeQuery
   }
 
@@ -92,8 +92,8 @@ export default function SearchPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Search Food</h1>
-          <p className="text-muted-foreground">Find your favorite dishes</p>
+          <h1 className="text-4xl font-bold text-foreground mb-2">Search Products</h1>
+          <p className="text-muted-foreground">Find exactly what you're looking for</p>
         </div>
 
         {/* Search Input */}
@@ -154,7 +154,7 @@ export default function SearchPage() {
                   </code>
                   <p className="text-muted-foreground mt-2">
                     This would be vulnerable to SQL injection. For example, searching for{" "}
-                    <code className="bg-white px-2 py-1 rounded">'; DROP TABLE food_items; --</code> could delete data.
+                    <code className="bg-white px-2 py-1 rounded">'; DROP TABLE products; --</code> could delete data.
                   </p>
                 </div>
 
@@ -201,7 +201,7 @@ export default function SearchPage() {
           <Card className="p-12 text-center">
             <div className="text-4xl mb-4">🔍</div>
             <h2 className="text-xl font-semibold text-foreground mb-2">Start searching</h2>
-            <p className="text-muted-foreground">Enter a search term to find food items</p>
+            <p className="text-muted-foreground">Enter a search term to find products</p>
           </Card>
         )}
       </div>

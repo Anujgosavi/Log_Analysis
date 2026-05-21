@@ -13,17 +13,17 @@ export default function Home() {
 		<main className="relative min-h-screen bg-background flex items-center">
 			{/* content sits above the image */}
 			<div className="z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 -mt-100 text-center">
-				<h1 className="text-7xl font-extrabold text-foreground mb-4">Welcome to Grubhub</h1>
+				<h1 className="text-7xl font-extrabold text-foreground mb-4">Welcome to ShopHub</h1>
 				<p className="text-lg text-muted-foreground mb-8">
-					Fast delivery, fresh food, and great prices. Browse our menu and order from a variety of cuisines.
+					Fast delivery, great prices, and thousands of products. Browse electronics, clothing, books, and more.
 				</p>
 
 				<div className="flex items-center justify-center gap-4">
 					<Link href="/food">
-						<Button variant="default">Explore Menu</Button>
+						<Button variant="default">Shop Now</Button>
 					</Link>
 					<Link href="/food">
-						<Button variant="outline">Order Now</Button>
+						<Button variant="outline">View Products</Button>
 					</Link>
 
 					{/* Toggle for global apiAnomaly state */}
