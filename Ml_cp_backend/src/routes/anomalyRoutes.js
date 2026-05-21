@@ -11,5 +11,6 @@ router.post("/", anomalyController.createAnomaly);
 router.get("/", anomalyController.getAnomalies);
 router.get("/stats", anomalyController.getAnomalyStats);
 router.get("/range", anomalyController.getAnomaliesByTimeRange);
+router.patch("/:id/feedback", anomalyController.submitFeedback);
 
 module.exports = router;

@@ -26,13 +26,19 @@ class MLService {
         console.log(`🔌 ML Port: ${this.mlPort}`);
 
         // Spawn Python process
-        this.pythonProcess = spawn("python", [pythonScript], {
+        this.pythonProcess = spawn("python3", [pythonScript], {
           cwd: mlDir,
           stdio: ["pipe", "pipe", "pipe"],
           env: {
             ...process.env,
             PYTHONUNBUFFERED: "1",
           },
+        });
+
+        // Handle spawn errors (e.g. python3 not found) without crashing the process
+        this.pythonProcess.on("error", (err) => {
+          console.error("❌ Failed to spawn ML process:", err.message);
+          reject(err);
         });
 
         // Capture stdout
@@ -49,8 +55,6 @@ class MLService {
         this.pythonProcess.on("close", (code) => {
           this.isRunning = false;
           console.error(`❌ ML Service exited with code ${code}`);
-          // Attempt to restart after 5 seconds
-          setTimeout(() => this.start(), 5000);
         });
 
         // Wait for the service to be ready

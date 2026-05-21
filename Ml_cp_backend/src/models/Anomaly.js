@@ -18,6 +18,8 @@ const anomalySchema = new mongoose.Schema({
     reconstruction_error: { type: Number },
     is_anomaly: { type: Boolean, default: true },
     flagged_at: { type: Date, default: Date.now },
+    engineer_label: { type: String, enum: ["correct", "incorrect"], default: null },
+    reviewed_at: { type: Date, default: null },
 }, { strict: false });
 
 module.exports = mongoose.model("Anomaly", anomalySchema);

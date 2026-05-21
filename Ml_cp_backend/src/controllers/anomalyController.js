@@ -172,6 +172,32 @@ exports.getAnomalyStats = async (req, res) => {
   }
 };
 
+// Submit engineer feedback on an anomaly
+exports.submitFeedback = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { engineer_label } = req.body;
+
+    if (!["correct", "incorrect"].includes(engineer_label)) {
+      return res.status(400).json({ success: false, error: "engineer_label must be 'correct' or 'incorrect'" });
+    }
+
+    const anomaly = await Anomaly.findByIdAndUpdate(
+      id,
+      { engineer_label, reviewed_at: new Date() },
+      { new: true }
+    );
+
+    if (!anomaly) {
+      return res.status(404).json({ success: false, error: "Anomaly not found" });
+    }
+
+    res.status(200).json({ success: true, data: anomaly });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
 // Diagnostic: Check anomalies count and DB info
 exports.getDiagnostics = async (req, res) => {
   try {
